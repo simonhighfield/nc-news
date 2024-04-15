@@ -7,4 +7,4 @@ exports. fetchTopics = (argument1) => {
     });
 }
 
-console.log('models.js guten tag');
+// console.log('models.js guten tag');
