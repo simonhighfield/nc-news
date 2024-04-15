@@ -1,9 +1,11 @@
-const {getTopics} = require("./controller")
+const {getTopics, getAPI} = require("./controller")
 const express = require("express")
 
 const app = express()
 
 app.get('/api/topics', getTopics)
+
+app.get('/api', getAPI)
 
 // Return error for all requests to invalid endpoints i.e. get/invalidEndpoint
 app.all('*', (req, res, next) => {
