@@ -4,10 +4,10 @@ In order to use the test and development databases, please do the following
 In the root directory BE-BC-NEWS create two files
 
 .env.test which contains only:
-    PGDATABASE=nc_news_test
+    PGDATABASE= ...
 
 .env.development which contains only
-    PGDATABASE=nc_news
+    PGDATABASE= ...
 
 Next hit npm install
 
