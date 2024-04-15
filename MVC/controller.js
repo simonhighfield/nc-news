@@ -1,7 +1,10 @@
-const {fetch} = require("./models")
+const {fetchTopics} = require("./models")
 
-exports. get = (req, res, next) => {
+exports. getTopics = (req, res, next) => {
     // console.log('controller.js bounjour');
-    fetch()
+    fetchTopics()
+    .then((topics) => {
+        res.status(200).send(topics)
+    })
 }
 

@@ -1,7 +1,8 @@
-const {get} = require("./controller")
+const {getTopics} = require("./controller")
 const express = require("express")
 
 const app = express()
 
-// console.log('app.js helloooo');
-get()
+app.get('/api/topics', getTopics)
+
+module.exports = app;
