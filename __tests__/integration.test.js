@@ -10,19 +10,20 @@ beforeEach(() => {
 })
 afterAll(() => db.end())
 
-describe('ALL: /invalidEndpoint', () => {
+describe('ALL /invalidEndpoint', () => {
     test('ALL METHODS 404: invalid endpoint responds with an error message', () => {
         return request(app)
         .get("/api/invalidEndpoint")
         .expect(404)
         .then(({ body }) => {
             const { msg } = body
+            expect(msg).toBe('endpoint not found')
         })
     })
 })
 
 
-describe('GET: /api/topics', () => {
+describe('GET /api/topics', () => {
     test('GET200: endpoint that responds with all topics with slug and description properties', () => {
         return request(app)
         .get("/api/topics")
@@ -38,13 +39,53 @@ describe('GET: /api/topics', () => {
     })
 })
 
-describe('GET: /api', () => {
-    test('GET200: endpoint responds with a JSON where each object has ', () => {
+describe('GET /api', () => {
+    test('GET200: endpoint responds with a JSON that describes all endpoints', () => {
         return request(app)
         .get("/api")
         .expect(200)
         .then(({body})=>{
             expect(body).toEqual(endpoints)
+        })
+    })
+})
+
+describe('GET /api/articles/:article_id', () => {
+    test('GET200: endpoint responds with an article object with the correct properties', () => {
+        return request(app)
+        .get('/api/articles/1')
+        .expect(200)
+        .then(({body})=>{
+            const article = body
+            expect(typeof article.author).toBe('string')
+            expect(typeof article.title).toBe('string')
+            expect(typeof article.article_id).toBe('number')
+            expect(typeof article.body).toBe('string')
+            expect(typeof article.topic).toBe('string')
+            expect(typeof article.created_at).toBe('string')
+            expect(typeof article.votes).toBe('number')
+            expect(typeof article.article_img_url).toBe('string')
+        })
+    })
+
+    test('GET404: endpoint responds with appropriate error for article ids that could be valid but are unused', () => {
+        return request(app)
+        .get('/api/articles/99')
+        .expect(404)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('endpoint not found')
+        })
+    })
+
+    // invalid argument
+    test('GET400: endpoint responds with appropriate error for article ids that are invalid', () => {
+        return request(app)
+        .get('/api/articles/invalid')
+        .expect(400)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('invalid ID')
         })
     })
 })
