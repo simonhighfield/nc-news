@@ -17,5 +17,7 @@ exports. getArticle = (req, res, next) => {
     .then((article) => {
         res.status(200).send(article)
     })
-    // console.log(article_id);
+    .catch((err) => {
+        next()
+    })
 }

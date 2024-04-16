@@ -67,4 +67,13 @@ describe('GET /api/articles/:article_id', () => {
         })
     })
 
+    test('GET404: endpoint responds with appropriate error for article ids that could be valid but are unused', () => {
+        return request(app)
+        .get('/api/articles/99')
+        .expect(404)
+        .then(({ body }) => {
+            const { msg } = body
+        })
+    })
+
 })
