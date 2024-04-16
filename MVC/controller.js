@@ -17,7 +17,6 @@ exports. getArticle = (req, res, next) => {
     .then((article) => {
         res.status(200).send(article)
     })
-    .catch((err) => {
-        next()
-    })
+    .catch(next)
+    // this catches BOTH SQL errors and custom ones
 }

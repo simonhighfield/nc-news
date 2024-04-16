@@ -7,11 +7,17 @@ app.get('/api/topics', getTopics)
 app.get('/api', getAPI)
 app.get('/api/articles/:article_id', getArticle)
 
-// Return error for all requests to invalid endpoints i.e. get/invalidEndpoint
+/** Error Handling Middleware */
+app.use((err, req, res, next) => {
+    if (err.code === '22P02') {
+        res.status(400).send({msg: 'invalid ID'})   
+    }
+    next()
+}) 
+
+/** Return error for all requests to invalid endpoints i.e. get/invalidEndpoint */ 
 app.all('*', (req, res, next) => {
     res.status(404).send({msg: 'endpoint not found'})   
-        // question for whoever's giving me feedback: where is 'res' defined as either res or response?
-        // I struggled for a long time doing response.status ...
 })
 
 module.exports = app;

@@ -78,5 +78,14 @@ describe('GET /api/articles/:article_id', () => {
         })
     })
 
-
+    // invalid argument
+    test('GET400: endpoint responds with appropriate error for article ids that are invalid', () => {
+        return request(app)
+        .get('/api/articles/invalid')
+        .expect(400)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('invalid ID')
+        })
+    })
 })
