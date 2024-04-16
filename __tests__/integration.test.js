@@ -21,7 +21,7 @@ describe('ALL /invalidEndpoint', () => {
         })
     })
 })
-
+// passing topics back as an object here
 
 describe('GET /api/topics', () => {
     test('GET200: endpoint that responds with all topics with slug and description properties', () => {
@@ -29,7 +29,7 @@ describe('GET /api/topics', () => {
         .get("/api/topics")
         .expect(200)
         .then(({body})=>{
-            const topics = body
+            const {topics} = body
             expect(topics.length).toBe(testData.topicData.length)
             topics.forEach((topic)=>{
                 expect(typeof topic.slug).toBe("string")
@@ -56,7 +56,7 @@ describe('GET /api/articles/:article_id', () => {
         .get('/api/articles/1')
         .expect(200)
         .then(({body})=>{
-            const article = body
+            const {article} = body
             expect(typeof article.author).toBe('string')
             expect(typeof article.title).toBe('string')
             expect(typeof article.article_id).toBe('number')
