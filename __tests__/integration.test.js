@@ -17,6 +17,7 @@ describe('ALL /invalidEndpoint', () => {
         .expect(404)
         .then(({ body }) => {
             const { msg } = body
+            expect(msg).toBe('endpoint not found')
         })
     })
 })
@@ -73,7 +74,9 @@ describe('GET /api/articles/:article_id', () => {
         .expect(404)
         .then(({ body }) => {
             const { msg } = body
+            expect(msg).toBe('endpoint not found')
         })
     })
+
 
 })
