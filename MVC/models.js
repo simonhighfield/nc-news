@@ -1,10 +1,17 @@
+const { log } = require('console');
 const db = require('../db/connection')
+const fs = require('fs/promises');
+const app = require('./app');
+const endpoints = require('../endpoints.json')
 
-exports. fetchTopics = (argument1) => {
+exports. fetchTopics = () => {
     return db.query(`SELECT * FROM topics;`)
     .then(({ rows }) => {
         return rows;
     });
 }
 
-// console.log('models.js guten tag');
+exports. fetchAPI = () => {
+    return endpoints
+}
+

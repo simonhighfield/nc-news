@@ -1,4 +1,4 @@
-const {fetchTopics} = require("./models")
+const {fetchTopics, fetchAPI} = require("./models")
 
 exports. getTopics = (req, res, next) => {
     fetchTopics()
@@ -7,5 +7,6 @@ exports. getTopics = (req, res, next) => {
     })
 }
 
-
-// console.log('controller.js bonjour');
+exports. getAPI = (req, res, next) => {
+    res.status(200).send(fetchAPI())
+}
