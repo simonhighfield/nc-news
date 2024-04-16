@@ -8,11 +8,13 @@ exports. getTopics = (req, res, next) => {
 }
 
 exports. getAPI = (req, res, next) => {
-    console.log('get API');
-    fetchAPI()
-    .then((topics) => {
-        res.status(200).send(topics)
-    })
+    // fetchAPI()
+    // .then((api) => {
+    //     console.log(api);
+    //     res.status(200).send(api)
+    // })
+    // .catch((err) => {
+    //     console.log('error is ');
+    // })
+    res.status(200).send(fetchAPI())
 }
-
-// console.log('controller.js bonjour');
