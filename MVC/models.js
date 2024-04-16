@@ -12,10 +12,6 @@ exports. fetchTopics = () => {
 }
 
 exports. fetchAPI = () => {
-    // return fs.readFile('./endpoints.json', 'utf-8')      // WHY does single dot work here?!?!
-    // .then((rawFile) => {
-    //     return JSON.parse(rawFile)
-    // })
     return endpoints
 }
 
