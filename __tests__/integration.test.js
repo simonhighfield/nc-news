@@ -28,7 +28,7 @@ describe('GET /api/topics', () => {
         return request(app)
         .get("/api/topics")
         .expect(200)
-        .then(({body})=>{
+        .then(({ body })=>{
             const {topics} = body
             expect(topics.length).toBe(testData.topicData.length)
             topics.forEach((topic)=>{
@@ -44,7 +44,7 @@ describe('GET /api', () => {
         return request(app)
         .get("/api")
         .expect(200)
-        .then(({body})=>{
+        .then(({ body })=>{
             expect(body).toEqual(endpoints)
         })
     })
@@ -55,8 +55,8 @@ describe('GET /api/articles/:article_id', () => {
         return request(app)
         .get('/api/articles/1')
         .expect(200)
-        .then(({body})=>{
-            const {article} = body
+        .then(({ body })=>{
+            const { article } = body
             expect(typeof article.author).toBe('string')
             expect(typeof article.title).toBe('string')
             expect(typeof article.article_id).toBe('number')
@@ -86,6 +86,57 @@ describe('GET /api/articles/:article_id', () => {
         .then(({ body }) => {
             const { msg } = body
             expect(msg).toBe('invalid ID')
+        })
+    })
+})
+
+
+describe('GET /api/articles', () => {
+    test('GET200: endpoint responds with an array of the correct numbner of article objects with correct properties', () => {
+        return request(app)
+        .get("/api/articles")
+        .expect(200)
+        .then(({ body })=>{
+            const { articles } = body
+            
+            expect(articles.length).toBe(13)
+
+            articles.forEach((article)=>{
+                expect(article).toMatchObject({
+                    author: expect.any(String),
+                    title: expect.any(String),
+                    article_id: expect.any(Number),
+                    topic: expect.any(String),
+                    created_at: expect.any(String),
+                    votes: expect.any(Number),
+                    article_img_url: expect.any(String),
+                    comment_count: expect.any(Number)
+                })
+
+                expect(article.body).toBe(undefined)
+            })
+        })
+    })
+
+    test('GET200: endpoint responds with the articles sorted in descending order', () => {
+        return request(app)
+        .get("/api/articles")
+        .expect(200)
+        .then(({ body })=>{
+            const { articles } = body
+            
+            expect(articles).toBeSortedBy('created_at', {descending: true})
+        })
+    })
+
+    
+    test('GET404: endpoint responds with appropriate error if endpoint misspelt', () => {
+        return request(app)
+        .get('/api/articlesss')
+        .expect(404)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('endpoint not found')
         })
     })
 })

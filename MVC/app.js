@@ -1,11 +1,17 @@
-const {getTopics, getAPI, getArticle} = require("./controller")
+const {
+    getTopics, 
+    getAPI, 
+    getArticleById,
+    getArticles
+} = require("./controller")
 const express = require("express")
 
 const app = express()
 
 app.get('/api/topics', getTopics)
 app.get('/api', getAPI)
-app.get('/api/articles/:article_id', getArticle)
+app.get('/api/articles/:article_id', getArticleById)
+app.get('/api/articles', getArticles)
 
 /** Error Handling Middleware */
 app.use((err, req, res, next) => {
