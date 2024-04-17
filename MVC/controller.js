@@ -40,6 +40,7 @@ exports. getArticles = (req, res, next) => {
 
 exports. getArticleComments = (req, res, next) => {
     const { article_id } = req.params
+    console.log('controller');
     fetchArticleComments(article_id)
     .then(({comments}) => {
         res.status(200).send({comments})

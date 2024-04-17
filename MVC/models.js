@@ -46,6 +46,7 @@ exports. fetchArticles = () => {
         ORDER BY articles.created_at DESC
     ;`)
     .then(({ rows }) => {
+        console.log(rows);
         return {articles: rows};
     });
 }
@@ -64,7 +65,6 @@ exports. fetchArticleComments = (article_id) => {
         ORDER BY comments.created_at DESC
         ;`, [article_id])
     .then(({ rows }) => {
-        console.log(rows);
         if (rows.length) {
             return {comments: rows};
         } else {
