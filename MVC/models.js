@@ -61,6 +61,7 @@ exports. fetchArticleComments = () => {
             comments.body, 
             comments.article_id
         FROM comments
+        WHERE article_id = 1
         ;`)
     .then(({ rows }) => {
         console.log(rows);

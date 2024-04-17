@@ -140,7 +140,7 @@ describe('GET /api/articles/:article_id/comments', () => {
         .then(({ body })=>{
             const { comments } = body
             
-            expect(comments.length).toBe(18)
+            expect(comments.length).toBe(11)
 
             comments.forEach((comment)=>{
                 expect(comment).toMatchObject({
@@ -149,9 +149,10 @@ describe('GET /api/articles/:article_id/comments', () => {
                     created_at: expect.any(String),
                     author: expect.any(String),
                     body: expect.any(String),
-                    article_id: expect.any(Number)
+                    article_id: 1
                 })
             })
         })
     })
+
 })
