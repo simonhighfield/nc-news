@@ -1,6 +1,5 @@
 const { log } = require('console');
 const db = require('../db/connection')
-const fs = require('fs/promises');
 const app = require('./app');
 const endpoints = require('../endpoints.json')
 
@@ -49,5 +48,22 @@ exports. fetchArticles = () => {
     ;`)
     .then(({ rows }) => {
         return {articles: rows};
+    });
+}
+
+exports. fetchArticleComments = () => {
+    return db.query(
+        `SELECT
+            comments.comment_id,
+            comments.votes,
+            comments.created_at,
+            comments.author,
+            comments.body, 
+            comments.article_id
+        FROM comments
+        ;`)
+    .then(({ rows }) => {
+        console.log(rows);
+        return {comments: rows};
     });
 }

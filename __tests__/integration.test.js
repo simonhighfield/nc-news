@@ -131,3 +131,27 @@ describe('GET /api/articles', () => {
 
     // No need to have a 404 test in this block: we are already testing for it in a dedicated endpoint.
 })
+
+describe('GET /api/articles/:article_id/comments', () => {
+    test('GET200: endpoint responds with an array of the correct numbner of comment objects with correct properties', () => {
+        return request(app)
+        .get("/api/articles/1/comments")
+        .expect(200)
+        .then(({ body })=>{
+            const { comments } = body
+            
+            expect(comments.length).toBe(18)
+
+            comments.forEach((comment)=>{
+                expect(comment).toMatchObject({
+                    comment_id: expect.any(Number),
+                    votes: expect.any(Number),
+                    created_at: expect.any(String),
+                    author: expect.any(String),
+                    body: expect.any(String),
+                    article_id: expect.any(Number)
+                })
+            })
+        })
+    })
+})

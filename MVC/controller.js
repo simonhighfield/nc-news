@@ -2,7 +2,8 @@ const {
     fetchTopics, 
     fetchAPI, 
     fetchArticleById,
-    fetchArticles
+    fetchArticles,
+    fetchArticleComments
 } = require("./models")
 
 exports. getTopics = (req, res, next) => {
@@ -35,4 +36,14 @@ exports. getArticles = (req, res, next) => {
 
     .catch(next)
     // this catches BOTH SQL errors and custom ones
+}
+
+exports. getArticleComments = (req, res, next) => {
+    const { article_id } = req.params
+    console.log('controller');
+    fetchArticleComments(article_id)
+    .then(({comments}) => {
+        res.status(200).send({comments})
+    })
+    .catch(next)
 }
