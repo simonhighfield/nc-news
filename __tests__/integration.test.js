@@ -128,4 +128,15 @@ describe('GET /api/articles', () => {
             expect(articles).toBeSortedBy('created_at', {descending: true})
         })
     })
+
+    
+    test('GET404: endpoint responds with appropriate error if endpoint misspelt', () => {
+        return request(app)
+        .get('/api/articlesss')
+        .expect(404)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('endpoint not found')
+        })
+    })
 })
