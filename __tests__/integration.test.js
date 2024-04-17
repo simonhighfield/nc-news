@@ -92,7 +92,7 @@ describe('GET /api/articles/:article_id', () => {
 
 
 describe('GET /api/articles', () => {
-    test('GET200: endpoint responds with an array of the correct numner of article objects with correct properties', () => {
+    test('GET200: endpoint responds with an array of the correct numbner of article objects with correct properties', () => {
         return request(app)
         .get("/api/articles")
         .expect(200)
@@ -113,6 +113,17 @@ describe('GET /api/articles', () => {
                     comment_count: expect.any(Number)
                 })
             })
+        })
+    })
+
+    test('GET200: endpoint responds with the articles sorted in descending order', () => {
+        return request(app)
+        .get("/api/articles")
+        .expect(200)
+        .then(({ body })=>{
+            const { articles } = body
+            
+            expect(articles).toBeSortedBy('created_at', {descending: true})
         })
     })
 })
