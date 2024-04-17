@@ -15,7 +15,7 @@ exports. fetchAPI = () => {
     return endpoints
 }
 
-exports. fetchArticle = (article_id) => {
+exports. fetchArticleById = (article_id) => {
     return db.query(`SELECT * FROM articles WHERE article_id = $1;`, [article_id])
     .then(({ rows }) => {
         if (rows.length) {
@@ -30,3 +30,26 @@ exports. fetchArticle = (article_id) => {
     });
 }
 
+exports. fetchArticles = () => {
+    return db.query(
+        // I had lots of difficulty here: solution was it HAD to be groupped by articles.article_id
+        // :: reformats the string into the specified INT, As relabels that column (so property)
+        `SELECT
+            articles.author,
+            articles.title, 
+            articles.article_id,
+            articles.topic,
+            articles.created_at,
+            articles.votes,
+            articles.article_img_url,
+        COUNT(comment_id) :: INT AS comment_count
+        FROM articles
+        LEFT JOIN comments
+        ON comments.article_id = articles.article_id
+        GROUP BY articles.article_id
+    ;`)
+    .then(({ rows }) => {
+        console.log(rows);
+        return {articles: rows};
+    });
+}
