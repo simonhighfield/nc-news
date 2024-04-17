@@ -50,7 +50,7 @@ exports. fetchArticles = () => {
     });
 }
 
-exports. fetchArticleComments = () => {
+exports. fetchArticleComments = (article_id) => {
     return db.query(
         `SELECT
             comments.comment_id,
@@ -60,10 +60,15 @@ exports. fetchArticleComments = () => {
             comments.body, 
             comments.article_id
         FROM comments
-        WHERE article_id = 1
+        WHERE article_id = $1
         ORDER BY comments.created_at DESC
-        ;`)
+        ;`, [article_id])
     .then(({ rows }) => {
-        return {comments: rows};
+        console.log(rows);
+        if (rows.length) {
+            return {comments: rows};
+        } else {
+            return Promise.reject({msg: 'endpoint not found'})
+        }
     });
 }

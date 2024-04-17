@@ -165,4 +165,17 @@ describe('GET /api/articles/:article_id/comments', () => {
             expect(comments).toBeSortedBy('created_at', {descending: true})
         })
     })
+
+    // Test if valid but unused argument provided
+    test('GET404: endpoint responds with appropriate error for article ids that could be valid but are unused', () => {
+        return request(app)
+        .get('/api/articles/999/comments')
+        .expect(404)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('endpoint not found')
+        })
+    })
+    // Test if invalid argument provided
+    // test what if there are 0 comments?
 })
