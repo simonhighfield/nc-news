@@ -36,8 +36,3 @@ exports. getArticles = (req, res, next) => {
     .catch(next)
     // this catches BOTH SQL errors and custom ones
 }
-
-function countComments() {
-    // SQL query to database to get the comments
-    // export the raw comments data
-}

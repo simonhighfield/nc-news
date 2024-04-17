@@ -32,8 +32,6 @@ exports. fetchArticleById = (article_id) => {
 
 exports. fetchArticles = () => {
     return db.query(
-        // I had lots of difficulty here: solution was it HAD to be groupped by articles.article_id
-        // :: reformats the string into the specified INT, As relabels that column (so property)
         `SELECT
             articles.author,
             articles.title, 
@@ -50,7 +48,6 @@ exports. fetchArticles = () => {
         ORDER BY articles.created_at DESC
     ;`)
     .then(({ rows }) => {
-        console.log(rows);
         return {articles: rows};
     });
 }

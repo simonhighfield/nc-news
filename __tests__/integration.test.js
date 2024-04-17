@@ -129,14 +129,5 @@ describe('GET /api/articles', () => {
         })
     })
 
-    
-    test('GET404: endpoint responds with appropriate error if endpoint misspelt', () => {
-        return request(app)
-        .get('/api/articlesss')
-        .expect(404)
-        .then(({ body }) => {
-            const { msg } = body
-            expect(msg).toBe('endpoint not found')
-        })
-    })
+    // No need to have a 404 test in this block: we are already testing for it in a dedicated endpoint.
 })
