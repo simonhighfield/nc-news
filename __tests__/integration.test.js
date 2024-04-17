@@ -112,6 +112,8 @@ describe('GET /api/articles', () => {
                     article_img_url: expect.any(String),
                     comment_count: expect.any(Number)
                 })
+
+                expect(article.body).toBe(undefined)
             })
         })
     })
