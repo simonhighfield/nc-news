@@ -1,4 +1,3 @@
-const { log } = require('console');
 const db = require('../db/connection')
 const app = require('./app');
 const endpoints = require('../endpoints.json')
@@ -62,9 +61,9 @@ exports. fetchArticleComments = () => {
             comments.article_id
         FROM comments
         WHERE article_id = 1
+        ORDER BY comments.created_at DESC
         ;`)
     .then(({ rows }) => {
-        console.log(rows);
         return {comments: rows};
     });
 }
