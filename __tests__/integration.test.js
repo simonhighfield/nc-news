@@ -11,7 +11,7 @@ beforeEach(() => {
 afterAll(() => db.end())
 
 describe('ALL /invalidEndpoint', () => {
-    test('ALL METHODS 404: invalid endpoint responds with an error message', () => {
+    test('ALL METHODS 404: invalid endpoint response is an error message', () => {
         return request(app)
         .get("/api/invalidEndpoint")
         .expect(404)
@@ -24,7 +24,7 @@ describe('ALL /invalidEndpoint', () => {
 // passing topics back as an object here
 
 describe('GET /api/topics', () => {
-    test('GET200: endpoint that responds with all topics with slug and description properties', () => {
+    test('GET200: endpoint response is all topics with slug and description properties', () => {
         return request(app)
         .get("/api/topics")
         .expect(200)
@@ -40,7 +40,7 @@ describe('GET /api/topics', () => {
 })
 
 describe('GET /api', () => {
-    test('GET200: endpoint responds with a JSON that describes all endpoints', () => {
+    test('GET200: endpoint response is a JSON that describes all endpoints', () => {
         return request(app)
         .get("/api")
         .expect(200)
@@ -51,7 +51,7 @@ describe('GET /api', () => {
 })
 
 describe('GET /api/articles/:article_id', () => {
-    test('GET200: endpoint responds with an article object with the correct properties', () => {
+    test('GET200: endpoint response is an article object with the correct properties', () => {
         return request(app)
         .get('/api/articles/1')
         .expect(200)
@@ -68,7 +68,7 @@ describe('GET /api/articles/:article_id', () => {
         })
     })
 
-    test('GET404: endpoint responds with appropriate error for article ids that could be valid but are unused', () => {
+    test('GET404: endpoint response is 404 for article_id\'s that could be valid but are unused', () => {
         return request(app)
         .get('/api/articles/99')
         .expect(404)
@@ -78,7 +78,7 @@ describe('GET /api/articles/:article_id', () => {
         })
     })
 
-    test('GET400: endpoint responds with appropriate error for article ids that are invalid', () => {
+    test('GET400: endpoint response is 400 error for article_id\'s that are invalid', () => {
         return request(app)
         .get('/api/articles/invalid')
         .expect(400)
@@ -91,7 +91,7 @@ describe('GET /api/articles/:article_id', () => {
 
 
 describe('GET /api/articles', () => {
-    test('GET200: endpoint responds with an array of the correct numbner of article objects with correct properties', () => {
+    test('GET200: endpoint response is an array of the correct numbner of article objects with correct properties', () => {
         return request(app)
         .get("/api/articles")
         .expect(200)
@@ -117,7 +117,7 @@ describe('GET /api/articles', () => {
         })
     })
 
-    test('GET200: endpoint responds with the articles sorted in descending order', () => {
+    test('GET200: endpoint response is the articles sorted in descending order', () => {
         return request(app)
         .get("/api/articles")
         .expect(200)
@@ -132,7 +132,7 @@ describe('GET /api/articles', () => {
 })
 
 describe('GET /api/articles/:article_id/comments', () => {
-    test('GET200: endpoint responds with an array of the correct numbner of comment objects with correct properties', () => {
+    test('GET200: endpoint response is an array of the correct numbner of comment objects with correct properties', () => {
         return request(app)
         .get("/api/articles/1/comments")
         .expect(200)
@@ -154,7 +154,7 @@ describe('GET /api/articles/:article_id/comments', () => {
         })
     })
 
-    test('GET200: endpoint responds with most recent comments first', () => {
+    test('GET200: endpoint response is sorted with most recent comments first', () => {
         return request(app)
         .get("/api/articles/1/comments")
         .expect(200)
@@ -165,7 +165,7 @@ describe('GET /api/articles/:article_id/comments', () => {
         })
     })
 
-    test('GET404: endpoint responds with 404 for article ids that could be valid but are unused', () => {
+    test('GET404: endpoint response is 404 error for article ids that could be valid but are unused', () => {
         return request(app)
         .get('/api/articles/999/comments')
         .expect(404)
@@ -175,7 +175,7 @@ describe('GET /api/articles/:article_id/comments', () => {
         })
     })
 
-    test('GET400: endpoint responds with 400 for article ids that are invalid', () => {
+    test('GET400: endpoint response is 400 error for article ids that are invalid', () => {
         return request(app)
         .get('/api/articles/invalid/comments')
         .expect(400)
@@ -185,7 +185,7 @@ describe('GET /api/articles/:article_id/comments', () => {
         })
     })
     
-    test('GET200: endpoint responds with an empty array for a valid article with no comments', () => {
+    test('GET200: endpoint response is an empty array for a valid article with no comments', () => {
         return request(app)
         .get("/api/articles/2/comments")
         .expect(200)
