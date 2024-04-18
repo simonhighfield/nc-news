@@ -2,7 +2,8 @@ const {
     getTopics, 
     getAPI, 
     getArticleById,
-    getArticles
+    getArticles,
+    getArticleComments
 } = require("./controller")
 const express = require("express")
 
@@ -12,6 +13,7 @@ app.get('/api/topics', getTopics)
 app.get('/api', getAPI)
 app.get('/api/articles/:article_id', getArticleById)
 app.get('/api/articles', getArticles)
+app.get('/api/articles/:article_id/comments', getArticleComments)
 
 /** Error Handling Middleware */
 app.use((err, req, res, next) => {

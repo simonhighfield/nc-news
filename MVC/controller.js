@@ -2,7 +2,9 @@ const {
     fetchTopics, 
     fetchAPI, 
     fetchArticleById,
-    fetchArticles
+    fetchArticles,
+    fetchArticleComments,
+    checkIfArticleExists
 } = require("./models")
 
 exports. getTopics = (req, res, next) => {
@@ -35,4 +37,15 @@ exports. getArticles = (req, res, next) => {
 
     .catch(next)
     // this catches BOTH SQL errors and custom ones
+}
+
+exports. getArticleComments = (req, res, next) => {
+    const { article_id } = req.params
+    
+    // retrive comments, and check if article exists simultaneously
+    Promise.all([fetchArticleComments(article_id), checkIfArticleExists(article_id)])
+    .then(([comments]) => {
+        res.status(200).send(comments)  // if no error from check, .then() returns []
+    })
+    .catch(next) // leads to 404
 }

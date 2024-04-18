@@ -1,6 +1,4 @@
-const { log } = require('console');
 const db = require('../db/connection')
-const fs = require('fs/promises');
 const app = require('./app');
 const endpoints = require('../endpoints.json')
 
@@ -50,4 +48,35 @@ exports. fetchArticles = () => {
     .then(({ rows }) => {
         return {articles: rows};
     });
+}
+
+exports. fetchArticleComments = (article_id) => {
+    return db.query(
+        `SELECT
+            comments.comment_id,
+            comments.votes,
+            comments.created_at,
+            comments.author,
+            comments.body, 
+            comments.article_id
+        FROM comments
+        WHERE article_id = $1
+        ORDER BY comments.created_at DESC
+        ;`, [article_id])
+    .then(({ rows }) => {
+        return {comments: rows};
+  
+    });
+}
+
+exports. checkIfArticleExists = (article_id) => {
+    // Used in get comments to check why there might be no comments. 
+    // If it's becasue the article doesn't exist, return an error leading to 404
+    return db.query(`SELECT * FROM articles WHERE article_id = $1;`, [article_id])
+    .then(({ rows }) => {
+        if (rows.length === 0) {
+            return Promise.reject({msg: 'endpoint not found'})
+        }
+    })
+
 }
