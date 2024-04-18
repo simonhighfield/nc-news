@@ -255,7 +255,7 @@ describe('POST /api/articles/:article_id/comments', () => {
         })
     })
 
-    test('POST 404: endpoint response is 404 error if post has no body', () => {
+    test('POST 400: endpoint response is 400 error if post has no body', () => {
         const newComment = {
             username: "icellusedkars",
             body: ""
@@ -270,4 +270,6 @@ describe('POST /api/articles/:article_id/comments', () => {
             expect(msg).toBe('bad request: no body')
         })
     })
+
+    // Do I need a test in case article_id is invalid, e.g. article_id = notAnIdNumber
 })
