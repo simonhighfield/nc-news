@@ -5,7 +5,8 @@ const {
     fetchArticles,
     fetchArticleComments,
     checkIfArticleExists,
-    insertComment
+    insertComment,
+    checkIfUserExists
 } = require("./models")
 
 exports. getTopics = (req, res, next) => {
@@ -57,8 +58,5 @@ exports. postComment = (req, res, next) => {
     .then((postedComment) => {
         res.status(201).send(postedComment)
     })
-    .catch((err) => {
-        console.log(err.code);
-        next(err)
-    })
+    .catch(next)
 }

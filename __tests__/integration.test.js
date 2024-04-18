@@ -239,4 +239,20 @@ describe('POST /api/articles/:article_id/comments', () => {
         })
     })
 
+    test('POST 404: endpoint response is 404 error if post is not by a valid author', () => {
+        const newComment = {
+            username: "invalidUser",
+            body: "the body of the new comment"
+        }
+
+        return request(app)
+        .post("/api/articles/2/comments")
+        .send(newComment)
+        .expect(404)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('endpoint not found')
+        })
+    })
+
 })
