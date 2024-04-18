@@ -255,4 +255,19 @@ describe('POST /api/articles/:article_id/comments', () => {
         })
     })
 
+    test('POST 404: endpoint response is 404 error if post has no body', () => {
+        const newComment = {
+            username: "icellusedkars",
+            body: ""
+        }
+
+        return request(app)
+        .post("/api/articles/2/comments")
+        .send(newComment)
+        .expect(400)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('bad request: no body')
+        })
+    })
 })
