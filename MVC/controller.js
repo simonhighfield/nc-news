@@ -4,7 +4,7 @@ const {
     fetchArticleById,
     fetchArticles,
     fetchArticleComments,
-    checkIfArticleExistinsert,
+    checkIfArticleExists,
     insertComment
 } = require("./models")
 
@@ -42,7 +42,6 @@ exports. getArticles = (req, res, next) => {
 
 exports. getArticleComments = (req, res, next) => {
     const { article_id } = req.params
-    
     // retrive comments, and check if article exists simultaneously
     Promise.all([fetchArticleComments(article_id), checkIfArticleExists(article_id)])
     .then(([comments]) => {
@@ -54,10 +53,12 @@ exports. getArticleComments = (req, res, next) => {
 exports. postComment = (req, res, next) => {
     const { article_id } = req.params
     const { username, body } = req.body
-
     insertComment(article_id, username, body)   
     .then((postedComment) => {
-        console.log('in .then() postedComment is ', postedComment);
         res.status(201).send(postedComment)
+    })
+    .catch((err) => {
+        console.log(err.code);
+        next(err)
     })
 }

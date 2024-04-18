@@ -78,7 +78,6 @@ exports. checkIfArticleExists = (article_id) => {
             return Promise.reject({msg: 'endpoint not found'})
         }
     })
-
 }
 
 exports. insertComment = (article_id, username, body) => {
@@ -91,6 +90,7 @@ exports. insertComment = (article_id, username, body) => {
             *
         ;`, [article_id, username, body])
     .then(({ rows }) => {
+        console.log(rows);
         return {postedComment: rows[0]};
     });
 }

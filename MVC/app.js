@@ -24,8 +24,14 @@ app.use((err, req, res, next) => {
     if (err.code === '22P02') {
         res.status(400).send({msg: 'invalid ID'})   
     }
+    next(err)
+})
+app.use((err, req, res, next) => {
+    if (err.code === '23503') {
+        res.status(404).send({msg: 'endpoint not found'})   
+    }
     next()
-}) 
+})
 
 /** Return error for all requests to invalid endpoints i.e. get/invalidEndpoint */ 
 app.all('*', (req, res, next) => {

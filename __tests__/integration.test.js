@@ -199,7 +199,7 @@ describe('GET /api/articles/:article_id/comments', () => {
 
 
 describe('POST /api/articles/:article_id/comments', () => {
-    test.only('POST 201: endpoint response is the posted comment', () => {
+    test('POST 201: endpoint response is the posted comment', () => {
 
         const newComment = {
             username: "icellusedkars",
@@ -222,4 +222,21 @@ describe('POST /api/articles/:article_id/comments', () => {
             })
         })
     })
+
+    test('POST 404: endpoint response is 404 error for an unused article number', () => {
+        const newComment = {
+            username: "icellusedkars",
+            body: "the body of the new comment for an unused article"
+        }
+
+        return request(app)
+        .post("/api/articles/99/comments")
+        .send(newComment)
+        .expect(404)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('endpoint not found')
+        })
+    })
+
 })
