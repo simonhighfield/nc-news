@@ -165,7 +165,7 @@ describe('GET /api/articles/:article_id/comments', () => {
         })
     })
 
-    test('GET404: endpoint responds with appropriate error for article ids that could be valid but are unused', () => {
+    test('GET404: endpoint responds with 404 for article ids that could be valid but are unused', () => {
         return request(app)
         .get('/api/articles/999/comments')
         .expect(404)
@@ -175,7 +175,7 @@ describe('GET /api/articles/:article_id/comments', () => {
         })
     })
 
-    test('GET400: endpoint responds with appropriate error for article ids that are invalid', () => {
+    test('GET400: endpoint responds with 400 for article ids that are invalid', () => {
         return request(app)
         .get('/api/articles/invalid/comments')
         .expect(400)
@@ -185,4 +185,14 @@ describe('GET /api/articles/:article_id/comments', () => {
         })
     })
     
+    test('GET200: endpoint responds with an empty array for a valid article with no comments', () => {
+        return request(app)
+        .get("/api/articles/2/comments")
+        .expect(200)
+        .then(({ body })=>{
+            const { comments } = body
+            
+            expect(comments).toEqual([])
+        })
+    })
 })
