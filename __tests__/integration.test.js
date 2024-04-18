@@ -196,3 +196,80 @@ describe('GET /api/articles/:article_id/comments', () => {
         })
     })
 })
+
+
+describe('POST /api/articles/:article_id/comments', () => {
+    test('POST 201: endpoint response is the posted comment', () => {
+
+        const newComment = {
+            username: "icellusedkars",
+            body: "the body of the new comment"
+        }
+
+        return request(app)
+        .post("/api/articles/2/comments")
+        .send(newComment)
+        .expect(201)
+        .then(({ body }) => {
+            const { postedComment } = body
+            expect(postedComment).toMatchObject({
+                comment_id: expect.any(Number),
+                votes: expect.any(Number),
+                created_at: expect.any(String),
+                author: newComment.username,
+                body: newComment.body,
+                article_id: 2
+            })
+        })
+    })
+
+    test('POST 404: endpoint response is 404 error for an unused article number', () => {
+        const newComment = {
+            username: "icellusedkars",
+            body: "the body of the new comment for an unused article"
+        }
+
+        return request(app)
+        .post("/api/articles/99/comments")
+        .send(newComment)
+        .expect(404)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('endpoint not found')
+        })
+    })
+
+    test('POST 404: endpoint response is 404 error if post is not by a valid author', () => {
+        const newComment = {
+            username: "invalidUser",
+            body: "the body of the new comment"
+        }
+
+        return request(app)
+        .post("/api/articles/2/comments")
+        .send(newComment)
+        .expect(404)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('endpoint not found')
+        })
+    })
+
+    test('POST 400: endpoint response is 400 error if post has no body', () => {
+        const newComment = {
+            username: "icellusedkars",
+            body: ""
+        }
+
+        return request(app)
+        .post("/api/articles/2/comments")
+        .send(newComment)
+        .expect(400)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('bad request: no body')
+        })
+    })
+
+    // Do I need a test in case article_id is invalid, e.g. article_id = notAnIdNumber
+})

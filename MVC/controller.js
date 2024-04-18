@@ -4,7 +4,9 @@ const {
     fetchArticleById,
     fetchArticles,
     fetchArticleComments,
-    checkIfArticleExists
+    checkIfArticleExists,
+    insertComment,
+    checkIfUserExists
 } = require("./models")
 
 exports. getTopics = (req, res, next) => {
@@ -41,11 +43,23 @@ exports. getArticles = (req, res, next) => {
 
 exports. getArticleComments = (req, res, next) => {
     const { article_id } = req.params
-    
     // retrive comments, and check if article exists simultaneously
     Promise.all([fetchArticleComments(article_id), checkIfArticleExists(article_id)])
     .then(([comments]) => {
         res.status(200).send(comments)  // if no error from check, .then() returns []
     })
     .catch(next) // leads to 404
+}
+
+exports. postComment = (req, res, next) => {
+    const { article_id } = req.params
+    const { username, body } = req.body
+
+    if (body.length === 0) {res.status(400).send({msg: 'bad request: no body'})}
+
+    insertComment(article_id, username, body)   
+    .then((postedComment) => {
+        res.status(201).send(postedComment)
+    })
+    .catch(next)
 }

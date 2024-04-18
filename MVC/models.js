@@ -78,5 +78,18 @@ exports. checkIfArticleExists = (article_id) => {
             return Promise.reject({msg: 'endpoint not found'})
         }
     })
+}
 
+exports. insertComment = (article_id, username, body) => {
+    return db.query(
+        `INSERT INTO comments 
+            (article_id, author, body) 
+        VALUES 
+            ($1, $2, $3) 
+        RETURNING 
+            *
+        ;`, [article_id, username, body])
+    .then(({ rows }) => {
+        return {postedComment: rows[0]};
+    });
 }
