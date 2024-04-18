@@ -196,3 +196,30 @@ describe('GET /api/articles/:article_id/comments', () => {
         })
     })
 })
+
+
+describe('POST /api/articles/:article_id/comments', () => {
+    test.only('POST 201: endpoint response is the posted comment', () => {
+
+        const newComment = {
+            username: "icellusedkars",
+            body: "the body of the new comment"
+        }
+
+        return request(app)
+        .post("/api/articles/2/comments")
+        .send(newComment)
+        .expect(201)
+        .then(({ body }) => {
+            const { postedComment } = body
+            expect(postedComment).toMatchObject({
+                comment_id: expect.any(Number),
+                votes: expect.any(Number),
+                created_at: expect.any(String),
+                author: newComment.username,
+                body: newComment.body,
+                article_id: 2
+            })
+        })
+    })
+})

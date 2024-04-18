@@ -4,7 +4,8 @@ const {
     fetchArticleById,
     fetchArticles,
     fetchArticleComments,
-    checkIfArticleExists
+    checkIfArticleExistinsert,
+    insertComment
 } = require("./models")
 
 exports. getTopics = (req, res, next) => {
@@ -48,4 +49,15 @@ exports. getArticleComments = (req, res, next) => {
         res.status(200).send(comments)  // if no error from check, .then() returns []
     })
     .catch(next) // leads to 404
+}
+
+exports. postComment = (req, res, next) => {
+    const { article_id } = req.params
+    const { username, body } = req.body
+
+    insertComment(article_id, username, body)   
+    .then((postedComment) => {
+        console.log('in .then() postedComment is ', postedComment);
+        res.status(201).send(postedComment)
+    })
 }
