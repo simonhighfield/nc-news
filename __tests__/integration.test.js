@@ -275,7 +275,7 @@ describe('POST /api/articles/:article_id/comments', () => {
 })
 
 describe('PATCH /api/articles/:article_id', () => {
-    test.only('PATCH200: endpoint response is the article with its votes correctly incrimented ', () => {
+    test('PATCH200: endpoint response is the article with its votes correctly incrimented ', () => {
 
         const article_id = 1
         const update = {inc_votes: 1}
@@ -302,7 +302,7 @@ describe('PATCH /api/articles/:article_id', () => {
         })
     })
 
-    test.only('PATCH404: endpoint response is 404 error for article ids that could be valid but are unused', () => {
+    test('PATCH404: endpoint response is 404 error for article ids that could be valid but are unused', () => {
         const article_id = 999
         const update = {inc_votes: 1}
         
@@ -330,7 +330,7 @@ describe('PATCH /api/articles/:article_id', () => {
         })
     })
 
-    test.only('PATCH400: endpoint response is 400 error if updates has no votes', () => {
+    test('PATCH400: endpoint response is 400 error if updates has no votes', () => {
         const article_id = 2
         const update = {inc_votes: 0}
 
