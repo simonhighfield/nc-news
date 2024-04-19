@@ -28,10 +28,10 @@ exports. fetchArticleById = (article_id) => {
     });
 }
 
-exports. fetchArticles = () => {
-    return db.query(
-        `SELECT
-            articles.author,
+exports. fetchArticles = (topic) => {
+    const queryValues = []
+    let sqlQueryString = 
+        `SELECT articles.author,
             articles.title, 
             articles.article_id,
             articles.topic,
@@ -41,11 +41,20 @@ exports. fetchArticles = () => {
         COUNT(comment_id) :: INT AS comment_count
         FROM articles
         LEFT JOIN comments
-        ON comments.article_id = articles.article_id
-        GROUP BY articles.article_id
-        ORDER BY articles.created_at DESC
-    ;`)
-    .then(({ rows }) => {
+        ON comments.article_id = articles.article_id `
+
+    if (topic) {
+        queryValues.push(topic)
+        sqlQueryString += 
+        `WHERE topic=$1 `
+    }
+
+    sqlQueryString += 
+        `GROUP BY articles.article_id
+        ORDER BY articles.created_at DESC;`
+
+        return db.query(sqlQueryString, queryValues)
+        .then(({ rows }) => {
         return {articles: rows};
     });
 }

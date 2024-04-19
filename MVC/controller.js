@@ -34,13 +34,16 @@ exports. getArticleById = (req, res, next) => {
 }
 
 exports. getArticles = (req, res, next) => {
-    fetchArticles()
+    const {topic} = req.query
+    fetchArticles(topic)
     .then(({ articles }) => {
-        res.status(200).send({articles: articles})
+        res.status(200).send({articles})
     })
     // add comment count from comments data to that article id
 
-    .catch(next)
+    .catch((err) => {
+        next(err)
+    })
     // this catches BOTH SQL errors and custom ones
 }
 
