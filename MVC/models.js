@@ -107,7 +107,6 @@ exports. fetchVotes = (article_id) => {
 
 
 exports. setVotes = (article_id, newVotes) => {
-    console.log('set Votes model');
     return db.query(
         `UPDATE 
             articles  

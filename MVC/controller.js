@@ -68,15 +68,17 @@ exports. postComment = (req, res, next) => {
 exports. patchVotes = (req, res, next) => {
     const { article_id } = req.params
     const { inc_votes } = req.body
-    console.log('patch votes');
 
-    fetchVotes(article_id)
-    .then(({ votes }) => {
+    Promise.all([fetchVotes(article_id), checkIfArticleExists(article_id)])
+    // the order of the functions above affects the array deconstruction below
+    .then(([result]) => {
+        const { votes } = result
         const newVotes = votes + inc_votes
         return setVotes(article_id, newVotes)   
     })
     .then((updatedArticle) => {
         res.status(200).send(updatedArticle)
     })
-    .catch(next)
+    .catch((err) => {
+        next(err)})
 }

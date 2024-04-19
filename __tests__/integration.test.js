@@ -275,7 +275,7 @@ describe('POST /api/articles/:article_id/comments', () => {
 })
 
 describe('PATCH /api/articles/:article_id', () => {
-    test.only('PATCH 200: endpoint response is the posted comment', () => {
+    test.only('PATCH200: endpoint response is the posted comment', () => {
 
         const article_id = 1
         const update = {inc_votes: 1}
@@ -302,4 +302,19 @@ describe('PATCH /api/articles/:article_id', () => {
         })
     })
 
+    test.only('PATCH404: endpoint response is 404 error for article ids that could be valid but are unused', () => {
+        const article_id = 999
+        const update = {inc_votes: 1}
+        
+        return request(app)
+        .patch(`/api/articles/${article_id}`)
+        .send(update)
+        .expect(404)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('endpoint not found')
+        })
+    })
+
+    
 })
