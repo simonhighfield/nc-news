@@ -316,5 +316,20 @@ describe('PATCH /api/articles/:article_id', () => {
         })
     })
 
-    
+    // Invalid article
+    test.only('PATCH400: endpoint response is 400 error for article ids that is invalid', () => {
+        const article_id = 'abc'
+        const update = {inc_votes: 1}
+        
+        return request(app)
+        .patch(`/api/articles/${article_id}`)
+        .send(update)
+        .expect(400)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('invalid ID')
+        })
+    })
+
+
 })
