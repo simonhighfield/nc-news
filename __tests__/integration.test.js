@@ -316,7 +316,7 @@ describe('PATCH /api/articles/:article_id', () => {
         })
     })
 
-    test.only('PATCH400: endpoint response is 400 error for article ids that are invalid', () => {
+    test('PATCH400: endpoint response is 400 error for article ids that are invalid', () => {
         const article_id = 'abc'
         const update = {inc_votes: 1}
         
