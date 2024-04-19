@@ -4,6 +4,7 @@ const testData = require('../db/data/test-data')
 const request = require('supertest')
 const app = require('../MVC/app')
 const endpoints = require('../endpoints.json')
+const { forEach } = require('../db/data/test-data/articles')
 
 beforeEach(() => { 
     return seed(testData) 
@@ -347,7 +348,7 @@ describe('PATCH /api/articles/:article_id', () => {
 })
 
 describe('DELETE /api/comments/:commend_id', () => {
-    test('PATCH204: endpoint response is 204 status with no comment', () => {
+    test('DELETE204: endpoint response is 204 status with no comment', () => {
 
         const comment_id = 1
 
@@ -371,7 +372,7 @@ describe('DELETE /api/comments/:commend_id', () => {
         })
     })
 
-    test('PATCH400: endpoint response is 400 error for article ids that are invalid', () => {
+    test('DELETE400: endpoint response is 400 error for article ids that are invalid', () => {
         const comment_id = 'abc'
         
         return request(app)
@@ -384,7 +385,7 @@ describe('DELETE /api/comments/:commend_id', () => {
     })
 })
 
-describe('DELETE /api/users', () => {
+describe('GET /api/users', () => {
     test('GET200: endpoint response is an array pf user objects with correct properties', () => {
         return request(app)
         .get(`/api/users`)
@@ -392,7 +393,6 @@ describe('DELETE /api/users', () => {
         .then(({ body }) => {
             const { users } = body
 
-            console.log(body);
             expect(users.length).toBe(4)
 
             users.forEach((user)=>{
@@ -402,6 +402,47 @@ describe('DELETE /api/users', () => {
                     avatar_url: expect.any(String),
                 })
             })
+        })
+    })
+})
+
+
+describe('GET /api/articles?topic=', () => {
+    test('GET200: endpoint response is 200 status with an array containing topics matching that query', () => {
+        const topic = 'mitch'
+
+        return request(app)
+        .get(`/api/articles?topic=${topic}`)
+        .expect(200)
+        .then(({ body }) => {
+            const { articles } = body
+
+            expect(articles.length).toBe(12)
+
+            articles.forEach(article => {
+                expect(article).toMatchObject({
+                    author: expect.any(String),
+                    title: expect.any(String),
+                    article_id: expect.any(Number),
+                    topic: topic,
+                    created_at: expect.any(String),
+                    votes: expect.any(Number),
+                    article_img_url: expect.any(String),
+                    comment_count: expect.any(Number)
+                })
+            });
+        })
+    })
+
+    test('GET200: endpoint response is 200 empty array for a topic with no items', () => {
+        const topic = 'unused topic'
+
+        return request(app)
+        .get(`/api/articles?topic=${topic}`)
+        .expect(200)
+        .then(({ body }) => {
+            const { articles } = body
+            expect(articles).toEqual([])
         })
     })
 })
