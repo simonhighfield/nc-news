@@ -360,4 +360,16 @@ describe('DELETE /api/comments/:commend_id', () => {
         })
     })
 
+    test('DELETE404: endpoint response is 404 error for comment ids that could be valid but are unused', () => {
+        const comment_id = 999
+        
+        return request(app)
+        .delete(`/api/comments/${comment_id}`)
+        .expect(404)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('endpoint not found')
+        })
+    })
+
 })

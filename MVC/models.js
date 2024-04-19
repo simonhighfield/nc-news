@@ -128,5 +128,12 @@ exports. removeComment = (comment_id) => {
             comments  
         WHERE 
             comment_id = $1
+        RETURNING
+            *
         ;`, [comment_id])
+    .then(({ rows }) => {
+        if (rows.length === 0) {
+            return Promise.reject({msg: 'endpoint not found'})
+        }
+    });
 }
