@@ -434,8 +434,7 @@ describe('GET /api/articles?topic=', () => {
         })
     })
 
-    // what if incorrect topic?
-    test.only('GET200: endpoint response is 200 empty array for a topic with no items', () => {
+    test('GET200: endpoint response is 200 empty array for a topic with no items', () => {
         const topic = 'unused topic'
 
         return request(app)
