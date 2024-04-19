@@ -8,7 +8,7 @@ const {
     patchVotes,
     deleteComment,
     getUsers
-} = require("./controller")
+} = require("./MVC/controller")
 const express = require("express")
 
 const app = express()
