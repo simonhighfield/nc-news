@@ -137,3 +137,16 @@ exports. removeComment = (comment_id) => {
         }
     });
 }
+
+exports. fetchUsers = () => {
+    return db.query(
+        `SELECT
+            users.username,
+            users.name,
+            users.avatar_url
+        FROM users
+    ;`)
+    .then(({ rows }) => {
+        return {users: rows};
+    });
+}

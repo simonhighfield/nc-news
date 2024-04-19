@@ -8,7 +8,8 @@ const {
     insertComment,
     fetchVotes,
     setVotes,
-    removeComment
+    removeComment,
+    fetchUsers
 } = require("./models")
 
 exports. getTopics = (req, res, next) => {
@@ -94,4 +95,12 @@ exports. deleteComment = (req, res, next) => {
     })
     .catch((err) => {
         next(err)})
+}
+
+exports. getUsers = (req, res, next) => {
+    fetchUsers()
+    .then(({ users }) => {
+        res.status(200).send({users})
+    })
+    .catch(next)
 }

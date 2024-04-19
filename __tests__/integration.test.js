@@ -356,7 +356,6 @@ describe('DELETE /api/comments/:commend_id', () => {
         .expect(204)
         .then(({ body }) => {
             const { updatedArticle } = body
-            // expect(updatedArticle).toEqual(expectedArticle)
         })
     })
 
@@ -381,6 +380,28 @@ describe('DELETE /api/comments/:commend_id', () => {
         .then(({ body }) => {
             const { msg } = body
             expect(msg).toBe('invalid ID')
+        })
+    })
+})
+
+describe('DELETE /api/users', () => {
+    test('GET200: endpoint response is an array pf user objects with correct properties', () => {
+        return request(app)
+        .get(`/api/users`)
+        .expect(200)
+        .then(({ body }) => {
+            const { users } = body
+
+            console.log(body);
+            expect(users.length).toBe(4)
+
+            users.forEach((user)=>{
+                expect(user).toMatchObject({
+                    username: expect.any(String),
+                    name: expect.any(String),
+                    avatar_url: expect.any(String),
+                })
+            })
         })
     })
 })
