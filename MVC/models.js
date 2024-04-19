@@ -93,3 +93,31 @@ exports. insertComment = (article_id, username, body) => {
         return {postedComment: rows[0]};
     });
 }
+
+exports. fetchVotes = (article_id) => {
+    return db.query(
+        `SELECT articles.votes  
+        FROM articles
+        WHERE article_id = $1
+        ;`, [article_id])
+    .then(({ rows }) => {
+        return rows[0]
+    });
+}
+
+
+exports. setVotes = (article_id, newVotes) => {
+    return db.query(
+        `UPDATE 
+            articles  
+        SET 
+            votes = $1
+        WHERE 
+            article_id = $2
+        RETURNING 
+            *
+        ;`, [newVotes, article_id])
+    .then(({ rows }) => {
+        return {updatedArticle: rows[0]};
+    });
+}

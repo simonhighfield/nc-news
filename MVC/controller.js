@@ -6,7 +6,8 @@ const {
     fetchArticleComments,
     checkIfArticleExists,
     insertComment,
-    checkIfUserExists
+    fetchVotes,
+    setVotes
 } = require("./models")
 
 exports. getTopics = (req, res, next) => {
@@ -62,4 +63,24 @@ exports. postComment = (req, res, next) => {
         res.status(201).send(postedComment)
     })
     .catch(next)
+}
+
+exports. patchVotes = (req, res, next) => {
+    const { article_id } = req.params
+    const { inc_votes } = req.body
+
+    if (inc_votes === 0) {res.status(400).send({msg: 'bad request: no incriment to votes'})}
+
+    Promise.all([fetchVotes(article_id), checkIfArticleExists(article_id)])
+    // the order of the functions above affects the array deconstruction below
+    .then(([result]) => {
+        const { votes } = result
+        const newVotes = votes + inc_votes
+        return setVotes(article_id, newVotes)   
+    })
+    .then((updatedArticle) => {
+        res.status(200).send(updatedArticle)
+    })
+    .catch((err) => {
+        next(err)})
 }
