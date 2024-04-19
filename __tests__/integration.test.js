@@ -275,7 +275,7 @@ describe('POST /api/articles/:article_id/comments', () => {
 })
 
 describe('PATCH /api/articles/:article_id', () => {
-    test.only('PATCH200: endpoint response is the posted comment', () => {
+    test.only('PATCH200: endpoint response is the article with its votes correctly incrimented ', () => {
 
         const article_id = 1
         const update = {inc_votes: 1}
@@ -316,8 +316,7 @@ describe('PATCH /api/articles/:article_id', () => {
         })
     })
 
-    // Invalid article
-    test.only('PATCH400: endpoint response is 400 error for article ids that is invalid', () => {
+    test.only('PATCH400: endpoint response is 400 error for article ids that are invalid', () => {
         const article_id = 'abc'
         const update = {inc_votes: 1}
         
@@ -331,5 +330,18 @@ describe('PATCH /api/articles/:article_id', () => {
         })
     })
 
+    test.only('PATCH400: endpoint response is 400 error if updates has no votes', () => {
+        const article_id = 2
+        const update = {inc_votes: 0}
+
+        return request(app)
+        .patch(`/api/articles/${article_id}`)
+        .send(update)
+        .expect(400)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('bad request: no incriment to votes')
+        })
+    })
 
 })

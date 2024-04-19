@@ -69,6 +69,8 @@ exports. patchVotes = (req, res, next) => {
     const { article_id } = req.params
     const { inc_votes } = req.body
 
+    if (inc_votes === 0) {res.status(400).send({msg: 'bad request: no incriment to votes'})}
+
     Promise.all([fetchVotes(article_id), checkIfArticleExists(article_id)])
     // the order of the functions above affects the array deconstruction below
     .then(([result]) => {
