@@ -372,4 +372,15 @@ describe('DELETE /api/comments/:commend_id', () => {
         })
     })
 
+    test('PATCH400: endpoint response is 400 error for article ids that are invalid', () => {
+        const comment_id = 'abc'
+        
+        return request(app)
+        .delete(`/api/comments/${comment_id}`)
+        .expect(400)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('invalid ID')
+        })
+    })
 })
