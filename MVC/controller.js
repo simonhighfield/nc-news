@@ -7,7 +7,8 @@ const {
     checkIfArticleExists,
     insertComment,
     fetchVotes,
-    setVotes
+    setVotes,
+    removeComment
 } = require("./models")
 
 exports. getTopics = (req, res, next) => {
@@ -80,6 +81,16 @@ exports. patchVotes = (req, res, next) => {
     })
     .then((updatedArticle) => {
         res.status(200).send(updatedArticle)
+    })
+    .catch((err) => {
+        next(err)})
+}
+
+exports. deleteComment = (req, res, next) => {
+    const { comment_id } = req.params
+    removeComment(comment_id)
+    .then(() => {
+        res.status(204).send()
     })
     .catch((err) => {
         next(err)})

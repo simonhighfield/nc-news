@@ -345,3 +345,42 @@ describe('PATCH /api/articles/:article_id', () => {
     })
 
 })
+
+describe('DELETE /api/comments/:commend_id', () => {
+    test('PATCH204: endpoint response is 204 status with no comment', () => {
+
+        const comment_id = 1
+
+        return request(app)
+        .delete(`/api/comments/${comment_id}`)
+        .expect(204)
+        .then(({ body }) => {
+            const { updatedArticle } = body
+            // expect(updatedArticle).toEqual(expectedArticle)
+        })
+    })
+
+    test('DELETE404: endpoint response is 404 error for comment ids that could be valid but are unused', () => {
+        const comment_id = 999
+        
+        return request(app)
+        .delete(`/api/comments/${comment_id}`)
+        .expect(404)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('endpoint not found')
+        })
+    })
+
+    test('PATCH400: endpoint response is 400 error for article ids that are invalid', () => {
+        const comment_id = 'abc'
+        
+        return request(app)
+        .delete(`/api/comments/${comment_id}`)
+        .expect(400)
+        .then(({ body }) => {
+            const { msg } = body
+            expect(msg).toBe('invalid ID')
+        })
+    })
+})
