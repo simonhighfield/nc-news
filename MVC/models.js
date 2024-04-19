@@ -14,10 +14,22 @@ exports. fetchAPI = () => {
 }
 
 exports. fetchArticleById = (article_id) => {
-    return db.query(`SELECT * FROM articles WHERE article_id = $1;`, [article_id])
+    const queryValues = []
+    // the comma in .*, is essential!
+    let sqlQueryString = `
+        SELECT articles.*,
+        COUNT(comments.article_id) :: INT AS comment_count
+        FROM articles
+        LEFT JOIN comments
+        ON comments.article_id = articles.article_id 
+        WHERE articles.article_id = $1
+        GROUP BY articles.article_id
+    ;`
+
+    return db.query(sqlQueryString, [article_id])
     .then(({ rows }) => {
         if (rows.length) {
-            return rows[0];
+            return {article: rows[0]};
             // This returns either a sucessful request with resulst ... 
             // ... or an SQL error (e.g. if invalid id)
         } else {

@@ -81,6 +81,16 @@ describe('GET /api/articles/:article_id', () => {
 
     test('GET400: endpoint response is 400 error for article_id\'s that are invalid', () => {
         return request(app)
+        .get('/api/articles/1')
+        .expect(200)
+        .then(({ body }) => {
+            const { article } = body
+            expect(article.comment_count).toBe(11)
+        })
+    })
+
+    test('GET200: endpoint response is 200, object includes comment_count', () => {
+        return request(app)
         .get('/api/articles/invalid')
         .expect(400)
         .then(({ body }) => {
