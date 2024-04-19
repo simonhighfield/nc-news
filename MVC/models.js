@@ -53,8 +53,8 @@ exports. fetchArticles = (topic) => {
         `GROUP BY articles.article_id
         ORDER BY articles.created_at DESC;`
 
-        return db.query(sqlQueryString, queryValues)
-        .then(({ rows }) => {
+    return db.query(sqlQueryString, queryValues)
+    .then(({ rows }) => {
         return {articles: rows};
     });
 }
