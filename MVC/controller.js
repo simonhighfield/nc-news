@@ -6,7 +6,8 @@ const {
     fetchArticleComments,
     checkIfArticleExists,
     insertComment,
-    checkIfUserExists
+    fetchVotes,
+    setVotes
 } = require("./models")
 
 exports. getTopics = (req, res, next) => {
@@ -60,6 +61,22 @@ exports. postComment = (req, res, next) => {
     insertComment(article_id, username, body)   
     .then((postedComment) => {
         res.status(201).send(postedComment)
+    })
+    .catch(next)
+}
+
+exports. patchVotes = (req, res, next) => {
+    const { article_id } = req.params
+    const { inc_votes } = req.body
+    console.log('patch votes');
+
+    fetchVotes(article_id)
+    .then(({ votes }) => {
+        const newVotes = votes + inc_votes
+        return setVotes(article_id, newVotes)   
+    })
+    .then((updatedArticle) => {
+        res.status(200).send(updatedArticle)
     })
     .catch(next)
 }

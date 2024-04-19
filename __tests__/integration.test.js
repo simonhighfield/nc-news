@@ -273,3 +273,33 @@ describe('POST /api/articles/:article_id/comments', () => {
 
     // Do I need a test in case article_id is invalid, e.g. article_id = notAnIdNumber
 })
+
+describe('PATCH /api/articles/:article_id', () => {
+    test.only('PATCH 200: endpoint response is the posted comment', () => {
+
+        const article_id = 1
+        const update = {inc_votes: 1}
+        const expectedArticle =   {
+            article_id: 1,
+            title: "Living in the shadow of a great man",
+            topic: "mitch",
+            author: "butter_bridge",
+            body: "I find this existence challenging",
+            created_at: '2020-07-09T20:11:00.000Z',
+            votes: 100,
+            article_img_url:
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+        }
+        expectedArticle.votes += update.inc_votes
+
+        return request(app)
+        .patch(`/api/articles/${article_id}`)
+        .send(update)
+        .expect(200)
+        .then(({ body }) => {
+            const { updatedArticle } = body
+            expect(updatedArticle).toEqual(expectedArticle)
+        })
+    })
+
+})

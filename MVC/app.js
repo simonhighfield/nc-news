@@ -4,7 +4,8 @@ const {
     getArticleById,
     getArticles,
     getArticleComments,
-    postComment
+    postComment,
+    patchVotes
 } = require("./controller")
 const express = require("express")
 
@@ -17,6 +18,8 @@ app.get('/api/articles/:article_id', getArticleById)
 app.get('/api/articles', getArticles)
 app.get('/api/articles/:article_id/comments', getArticleComments)
 app.post('/api/articles/:article_id/comments', postComment)
+app.patch('/api/articles/:article_id', patchVotes)
+
 
 
 /** Error Handling Middleware */
