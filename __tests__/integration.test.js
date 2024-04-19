@@ -345,3 +345,19 @@ describe('PATCH /api/articles/:article_id', () => {
     })
 
 })
+
+describe('DELETE /api/comments/:commend_id', () => {
+    test('PATCH204: endpoint response is 204 status with no comment', () => {
+
+        const comment_id = 1
+
+        return request(app)
+        .delete(`/api/comments/${comment_id}`)
+        .expect(204)
+        .then(({ body }) => {
+            const { updatedArticle } = body
+            // expect(updatedArticle).toEqual(expectedArticle)
+        })
+    })
+
+})
