@@ -16,6 +16,7 @@ exports. fetchAPI = () => {
 exports. fetchArticleById = (article_id) => {
     const queryValues = []
     // the comma in .*, is essential!
+    // added this SQL query string
     let sqlQueryString = `
         SELECT articles.*,
         COUNT(comments.article_id) :: INT AS comment_count
