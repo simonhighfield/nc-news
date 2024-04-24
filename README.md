@@ -20,10 +20,10 @@ Install husky (node package that stops you committing code that fails tests)
 Create the PSQL databases using
     ```npm run setup-dbs```
 
-Seed the ???development??? database
+Seed the development database
     ```npm run seed```
 
-Run the tests using
+Run the tests (test database gets erseed each time) using
     ```npm run test```
 
 Run the development database on nodemon, so that it can be interacted with using PSQL or Insomnia / Postman
