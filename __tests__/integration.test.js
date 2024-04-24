@@ -209,7 +209,7 @@ describe('GET /api/articles/:article_id/comments', () => {
 })
 
 
-describe('POST /api/articles/:article_id/comments', () => {
+describe('POST /api/articles/:article_id/comment', () => {
     test('POST 201: endpoint response is the posted comment', () => {
 
         const newComment = {
@@ -218,7 +218,7 @@ describe('POST /api/articles/:article_id/comments', () => {
         }
 
         return request(app)
-        .post("/api/articles/2/comments")
+        .post("/api/articles/2/comment")
         .send(newComment)
         .expect(201)
         .then(({ body }) => {
@@ -241,7 +241,7 @@ describe('POST /api/articles/:article_id/comments', () => {
         }
 
         return request(app)
-        .post("/api/articles/99/comments")
+        .post("/api/articles/99/comment")
         .send(newComment)
         .expect(404)
         .then(({ body }) => {
@@ -257,7 +257,7 @@ describe('POST /api/articles/:article_id/comments', () => {
         }
 
         return request(app)
-        .post("/api/articles/2/comments")
+        .post("/api/articles/2/comment")
         .send(newComment)
         .expect(404)
         .then(({ body }) => {
@@ -273,7 +273,7 @@ describe('POST /api/articles/:article_id/comments', () => {
         }
 
         return request(app)
-        .post("/api/articles/2/comments")
+        .post("/api/articles/2/comment")
         .send(newComment)
         .expect(400)
         .then(({ body }) => {
@@ -396,7 +396,7 @@ describe('DELETE /api/comments/:commend_id', () => {
 })
 
 describe('GET /api/users', () => {
-    test('GET200: endpoint response is an array pf user objects with correct properties', () => {
+    test('GET200: endpoint response is an array of user objects with correct properties', () => {
         return request(app)
         .get(`/api/users`)
         .expect(200)
