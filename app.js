@@ -42,8 +42,21 @@ app.use((err, req, res, next) => {
 })
 
 /** Return error for all requests to invalid endpoints i.e. get/invalidEndpoint */ 
+// Move this below API end points
 app.all('*', (req, res, next) => {
     res.status(404).send({msg: 'endpoint not found'})   
 })
+
+// have 500 after EHM
+// 500 errors not being caught at the mo
+// app.use catches 500, logs it and respond with status 500
+// Internal server error - something unpredictable. Not from my code, but will cause issues with my code
+// so prevents our code from crashing
+// app.use((err, req, res, next) => {
+//     console.log(err);    keep log in so we can see and inspect
+//     res.status(500).send('Server Error!');
+//   });
+
+
 
 module.exports = app;
