@@ -59,12 +59,12 @@ exports. getArticleComments = (req, res, next) => {
 
 exports. postComment = (req, res, next) => {
     const { article_id } = req.params
-    const { username, body } = req.body
+    const { author, body } = req.body
 
     if (body.length === 0) {res.status(400).send({msg: 'bad request: no body'})}
 
     else {
-        insertComment(article_id, username, body)   
+        insertComment(article_id, author, body)   
         .then((postedComment) => {
             res.status(201).send(postedComment)
         })

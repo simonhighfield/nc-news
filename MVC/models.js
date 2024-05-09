@@ -101,7 +101,7 @@ exports. checkIfArticleExists = (article_id) => {
     })
 }
 
-exports. insertComment = (article_id, username, body) => {
+exports. insertComment = (article_id, author, body) => {
     return db.query(
         `INSERT INTO comments 
             (article_id, author, body) 
@@ -109,7 +109,7 @@ exports. insertComment = (article_id, username, body) => {
             ($1, $2, $3) 
         RETURNING 
             *
-        ;`, [article_id, username, body])
+        ;`, [article_id, author, body])
     .then(({ rows }) => {
         return {postedComment: rows[0]};
     });

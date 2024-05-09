@@ -213,7 +213,7 @@ describe('POST /api/articles/:article_id/comments', () => {
     test('POST 201: endpoint response is the posted comment', () => {
 
         const newComment = {
-            username: "icellusedkars",
+            author: "icellusedkars",
             body: "the body of the new comment"
         }
 
@@ -227,7 +227,7 @@ describe('POST /api/articles/:article_id/comments', () => {
                 comment_id: expect.any(Number),
                 votes: expect.any(Number),
                 created_at: expect.any(String),
-                author: newComment.username,
+                author: newComment.author,
                 body: newComment.body,
                 article_id: 2
             })
@@ -236,7 +236,7 @@ describe('POST /api/articles/:article_id/comments', () => {
 
     test('POST 404: endpoint response is 404 error for an unused article number', () => {
         const newComment = {
-            username: "icellusedkars",
+            author: "icellusedkars",
             body: "the body of the new comment for an unused article"
         }
 
@@ -246,13 +246,13 @@ describe('POST /api/articles/:article_id/comments', () => {
         .expect(404)
         .then(({ body }) => {
             const { msg } = body
-            expect(msg).toBe('Key is not present in table')
+            expect(msg).toBe('key not found')
         })
     })
 
-    test('POST 404: endpoint response is 404 error if post is not by a valid author', () => {
+    test('POST 404: endpoint response is 404 error if post is by a valid but unused author', () => {
         const newComment = {
-            username: "invalidUser",
+            author: "unusedAuthor",
             body: "the body of the new comment"
         }
 
@@ -262,7 +262,7 @@ describe('POST /api/articles/:article_id/comments', () => {
         .expect(404)
         .then(({ body }) => {
             const { msg } = body
-            expect(msg).toBe('Key is not present in table')
+            expect(msg).toBe('key not found')
         })
     })
 
