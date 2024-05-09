@@ -39,7 +39,7 @@ app.use((err, req, res, next) => {
 app.use((err, req, res, next) => {
     if (err.code === '23503') {
         // this occurs when no matching column - e.g. as article_id or username not found
-        res.status(404).send({msg: err.detail})
+        res.status(404).send({msg: 'Key is not present in table'})
     }
     next()
 })

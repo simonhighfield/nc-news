@@ -246,7 +246,7 @@ describe('POST /api/articles/:article_id/comments', () => {
         .expect(404)
         .then(({ body }) => {
             const { msg } = body
-            expect(msg).toBe('Key (article_id)=(99) is not present in table "articles".')
+            expect(msg).toBe('Key is not present in table')
         })
     })
 
@@ -262,7 +262,7 @@ describe('POST /api/articles/:article_id/comments', () => {
         .expect(404)
         .then(({ body }) => {
             const { msg } = body
-            expect(msg).toBe('Key (author)=(invalidUser) is not present in table "users".')
+            expect(msg).toBe('Key is not present in table')
         })
     })
 
