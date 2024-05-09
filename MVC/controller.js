@@ -63,11 +63,14 @@ exports. postComment = (req, res, next) => {
 
     if (body.length === 0) {res.status(400).send({msg: 'bad request: no body'})}
 
-    insertComment(article_id, username, body)   
-    .then((postedComment) => {
-        res.status(201).send(postedComment)
-    })
-    .catch(next)
+    else {
+        insertComment(article_id, username, body)   
+        .then((postedComment) => {
+            res.status(201).send(postedComment)
+        })
+        .catch(next)
+    }
+
 }
 
 exports. patchVotes = (req, res, next) => {

@@ -74,7 +74,7 @@
       }]
     }
   },
-  "POST /api/articles/:article_id/comment": {
+  "POST /api/articles/:article_id/comments": {
     "description": "Posts a comment object containing username and body, and serves the posted comment with all properties",
     "queries": [],
     "exampleResponse":   {

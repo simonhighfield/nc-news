@@ -209,7 +209,7 @@ describe('GET /api/articles/:article_id/comments', () => {
 })
 
 
-describe('POST /api/articles/:article_id/comment', () => {
+describe('POST /api/articles/:article_id/comments', () => {
     test('POST 201: endpoint response is the posted comment', () => {
 
         const newComment = {
@@ -218,7 +218,7 @@ describe('POST /api/articles/:article_id/comment', () => {
         }
 
         return request(app)
-        .post("/api/articles/2/comment")
+        .post("/api/articles/2/comments")
         .send(newComment)
         .expect(201)
         .then(({ body }) => {
@@ -241,12 +241,12 @@ describe('POST /api/articles/:article_id/comment', () => {
         }
 
         return request(app)
-        .post("/api/articles/99/comment")
+        .post("/api/articles/99/comments")
         .send(newComment)
         .expect(404)
         .then(({ body }) => {
             const { msg } = body
-            expect(msg).toBe('endpoint not found')
+            expect(msg).toBe('Key (article_id)=(99) is not present in table "articles".')
         })
     })
 
@@ -257,12 +257,12 @@ describe('POST /api/articles/:article_id/comment', () => {
         }
 
         return request(app)
-        .post("/api/articles/2/comment")
+        .post("/api/articles/2/comments")
         .send(newComment)
         .expect(404)
         .then(({ body }) => {
             const { msg } = body
-            expect(msg).toBe('endpoint not found')
+            expect(msg).toBe('Key (author)=(invalidUser) is not present in table "users".')
         })
     })
 
@@ -273,7 +273,7 @@ describe('POST /api/articles/:article_id/comment', () => {
         }
 
         return request(app)
-        .post("/api/articles/2/comment")
+        .post("/api/articles/2/comments")
         .send(newComment)
         .expect(400)
         .then(({ body }) => {
