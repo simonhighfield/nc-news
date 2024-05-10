@@ -1,6 +1,7 @@
 const db = require('../db/connection')
 const app = require('../app');
-const endpoints = require('../endpoints.json')
+const endpoints = require('../endpoints.json');
+const { sort } = require('../db/data/test-data/articles');
 
 exports. fetchTopics = () => {
     return db.query(`SELECT * FROM topics;`)
@@ -40,7 +41,7 @@ exports. fetchArticleById = (article_id) => {
     });
 }
 
-exports. fetchArticles = (topic) => {
+exports. fetchArticles = (topic, sort_by='articles.created_at', order='DESC') => {
     const queryValues = []
     let sqlQueryString = 
         `SELECT articles.author,
@@ -63,7 +64,7 @@ exports. fetchArticles = (topic) => {
 
     sqlQueryString += 
         `GROUP BY articles.article_id
-        ORDER BY articles.created_at DESC;`
+        ORDER BY ${sort_by} ${order};`
 
     return db.query(sqlQueryString, queryValues)
     .then(({ rows }) => {
