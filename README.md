@@ -1,6 +1,6 @@
 # About Northcoders News
-This repository provides the back-end for the [Discus](https://discus-app.netlify.app/) web-app (formerly known as NC News)  
-An API is defined, and an MVC structure is used to interface between API calls and a Postgres SQL database that articles, comments etc.  
+This repository provides the back-end for the [Discus](https://discus-app.netlify.app/) web-app (formerly known as NC News).  
+An API is defined, and an MVC structure is used to interface between API calls and a Postgres SQL database that stores articles, comments, votes etc.  
 There are separate test, development, and production databases.
 
 
